@@ -26,3 +26,5 @@ The Node for Max adapter source lives in [node/](node/).
 ## Serum
 
 Serum and Serum 2 should be controlled through saved Ableton Instrument Racks with mapped macros. SceneLab should automate rack macros rather than attempting to drive the Serum UI directly.
+
+The end-to-end manual bridge check is documented in [Manual Ableton V1 Acceptance Test](../docs/acceptance/manual-ableton-v1.md).

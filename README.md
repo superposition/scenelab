@@ -87,6 +87,8 @@ packages/mcp/  Thin MCP wrapper around the CLI
 templates/     Arrangement and groove template registry
 ```
 
+The first manual Live proof is documented in [Manual Ableton V1 Acceptance Test](docs/acceptance/manual-ableton-v1.md).
+
 ## Status
 
 SceneLab is at scaffold stage. The initial GitHub issues define the v1 implementation path.
