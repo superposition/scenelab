@@ -43,6 +43,38 @@ The v1 proof template is `city-pop-6-8`:
 
 The response includes a dry-run plan with scenes, tracks, clips, MIDI notes, automation intent, asset expectations, mix expectations, and warnings. If no `templateId` is provided, the CLI defaults to `city-pop-6-8`.
 
+## Library Scanning
+
+`scan_library` runs locally in the CLI and indexes the Ableton User Library without requiring Ableton or the bridge.
+
+By default it scans:
+
+```text
+~/Music/Ableton/User Library
+```
+
+Use `params.libraryPath` or `SCENELAB_LIBRARY_PATH` to scan another folder:
+
+```json
+{
+  "action": "scan_library",
+  "params": {
+    "libraryPath": "~/Music/Ableton/User Library"
+  }
+}
+```
+
+Supported asset types:
+
+- racks: `.adg`
+- clips: `.alc`
+- samples: `.wav`, `.aif`, `.aiff`, `.flac`, `.mp3`, `.m4a`, `.ogg`
+- presets: `.adv`
+- templates: `.als`
+- Max for Live devices: `.amxd`
+
+The response includes a stable inventory sorted by relative path. Each asset has `path`, `relativePath`, `type`, `name`, `extension`, and inferred `tags`. Missing or unreadable folders are returned as response warnings with an empty inventory instead of silent success.
+
 ## Bridge URL
 
 By default, the CLI returns local placeholder responses. Set `SCENELAB_BRIDGE_URL` to send validated requests to a running bridge:

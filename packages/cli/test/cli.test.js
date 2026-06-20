@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url'
 import { test } from 'node:test'
 
 const cli = fileURLToPath(new URL('../dist/index.js', import.meta.url))
+const fixtureLibrary = fileURLToPath(new URL('fixtures/ableton-user-library/', import.meta.url))
 
 function runCli(input, options = {}) {
   const result = spawnSync(process.execPath, [cli], {
@@ -185,6 +186,78 @@ test('plan_arrangement remains local when a bridge is configured', async (t) => 
   assert.equal(result.json.ok, true)
   assert.equal(result.json.summary, 'Planned City Pop 6/8 Proof')
   assert.equal(result.json.data.plan.templateId, 'city-pop-6-8')
+  assert.deepEqual(received, [])
+})
+
+test('scan_library returns an inventory for a provided library path', () => {
+  const result = runCli(
+    JSON.stringify({
+      id: 'scan-fixture',
+      action: 'scan_library',
+      params: {
+        libraryPath: fixtureLibrary
+      }
+    })
+  )
+
+  assert.equal(result.status, 0)
+  assert.equal(result.stderr, '')
+  assert.equal(result.json.ok, true)
+  assert.equal(result.json.summary, 'Scanned Ableton User Library: 6 assets')
+  assert.equal(result.json.data.inventory.exists, true)
+  assert.equal(result.json.data.inventory.assetCount, 6)
+  assert.equal(result.json.data.inventory.typeCounts.rack, 1)
+  assert.equal(result.json.data.inventory.typeCounts.max_for_live_device, 1)
+  assert.deepEqual(
+    result.json.data.inventory.assets.map((asset) => asset.relativePath),
+    [
+      'Clips/Verse Groove.alc',
+      'Max for Live Devices/Synth Tools/Scene Utility.amxd',
+      'Presets/Audio Effects/Wide Chorus.adv',
+      'Presets/Instruments/City Keys.adg',
+      'Samples/Drums/Kick 01.wav',
+      'Templates/City Pop Starter.als'
+    ]
+  )
+})
+
+test('scan_library remains local when a bridge is configured', async (t) => {
+  const received = []
+  const bridge = await startFakeBridge(async (request, response) => {
+    const body = await readJsonRequest(request)
+    received.push(body)
+
+    writeJsonResponse(response, 200, {
+      ok: true,
+      id: body.id,
+      dryRun: body.dryRun,
+      summary: 'Fake bridge should not handle library scans',
+      data: {
+        bridge: 'fake'
+      },
+      warnings: []
+    })
+  })
+  t.after(async () => bridge.close())
+
+  const result = await runCliAsync(
+    JSON.stringify({
+      id: 'local-scan',
+      action: 'scan_library',
+      params: {
+        libraryPath: fixtureLibrary
+      }
+    }),
+    {
+      env: {
+        SCENELAB_BRIDGE_URL: bridge.url
+      }
+    }
+  )
+
+  assert.equal(result.status, 0)
+  assert.equal(result.json.ok, true)
+  assert.equal(result.json.summary, 'Scanned Ableton User Library: 6 assets')
   assert.deepEqual(received, [])
 })
 

@@ -1,10 +1,15 @@
-import type { SceneLabRequest, SceneLabResponse } from './schema.js'
+import type { SceneLabRequest, SceneLabResponse, SceneLabWarning } from './schema.js'
 import { callBridge, getBridgeUrl } from './bridge.js'
+import { scanLibrary } from './library.js'
 import { TemplateRegistryError } from './templates.js'
 import { planArrangement } from './planner.js'
 
 export async function handleRequest(request: SceneLabRequest): Promise<SceneLabResponse> {
   const bridgeUrl = getBridgeUrl()
+
+  if (request.action === 'scan_library') {
+    return handleScanLibrary(request)
+  }
 
   if (request.action === 'plan_arrangement') {
     return handlePlanArrangement(request)
@@ -23,11 +28,6 @@ export async function handleRequest(request: SceneLabRequest): Promise<SceneLabR
 
     case 'inspect_set':
       return ok(request, 'Set inspection is not implemented without a bridge', {
-        status: 'not_implemented'
-      })
-
-    case 'scan_library':
-      return ok(request, 'Library scanning is not implemented yet', {
         status: 'not_implemented'
       })
 
@@ -78,6 +78,23 @@ export async function handleRequest(request: SceneLabRequest): Promise<SceneLabR
   }
 }
 
+async function handleScanLibrary(request: SceneLabRequest): Promise<SceneLabResponse> {
+  try {
+    const result = await scanLibrary({
+      libraryPath: typeof request.params.libraryPath === 'string' ? request.params.libraryPath : undefined
+    })
+
+    return ok(request, `Scanned Ableton User Library: ${result.inventory.assetCount} assets`, {
+      inventory: result.inventory
+    }, result.warnings)
+  } catch (error) {
+    return fail(request, 'Library scanning failed', {
+      code: 'library_scan_error',
+      message: error instanceof Error ? error.message : String(error)
+    })
+  }
+}
+
 async function handlePlanArrangement(request: SceneLabRequest): Promise<SceneLabResponse> {
   try {
     const plan = await planArrangement({
@@ -103,7 +120,7 @@ async function handlePlanArrangement(request: SceneLabRequest): Promise<SceneLab
   }
 }
 
-function ok(request: SceneLabRequest, summary: string, data: Record<string, unknown>): SceneLabResponse {
+function ok(request: SceneLabRequest, summary: string, data: Record<string, unknown>, warnings: SceneLabWarning[] = []): SceneLabResponse {
   return {
     ok: true,
     id: request.id,

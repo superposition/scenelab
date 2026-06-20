@@ -9,6 +9,7 @@
   "exports": {
     ".": "./dist/index.js",
     "./schema": "./dist/schema.js",
+    "./library": "./dist/library.js",
     "./templates": "./dist/templates.js"
   },
   "scripts": {
