@@ -7,6 +7,7 @@ import { test } from 'node:test'
 import { loadTemplateRegistry } from '../dist/templates.js'
 
 const templatesDir = fileURLToPath(new URL('../../../templates', import.meta.url))
+const cliPackageDir = fileURLToPath(new URL('..', import.meta.url))
 
 test('loads v0 seed arrangement templates', async () => {
   const registry = await loadTemplateRegistry(templatesDir)
@@ -24,6 +25,19 @@ test('loads v0 seed arrangement templates', async () => {
   assert.equal(cityPop.tempoRange.defaultBpm, 96)
   assert.ok(cityPop.harmony.language.includes('secondary dominants'))
   assert.ok(cityPop.instrumentation.tracks.some((track) => track.role === 'synth-lead'))
+})
+
+test('default registry lookup works outside the repo root', async () => {
+  const originalCwd = process.cwd()
+
+  try {
+    process.chdir(cliPackageDir)
+    const registry = await loadTemplateRegistry()
+    assert.equal(registry.templates.length, 5)
+    assert.ok(registry.byId.has('city-pop-6-8'))
+  } finally {
+    process.chdir(originalCwd)
+  }
 })
 
 test('invalid templates fail with useful file and schema path details', async () => {

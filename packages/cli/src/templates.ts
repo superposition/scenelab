@@ -1,5 +1,7 @@
+import { existsSync } from 'node:fs'
 import { readdir, readFile } from 'node:fs/promises'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { z } from 'zod'
 
 export const genreFamilySchema = z.enum(['drum-and-bass', 'jazz', 'rock', 'city-pop', 'modern-pop'])
@@ -223,5 +225,21 @@ async function findJsonFiles(directory: string): Promise<string[]> {
 }
 
 function defaultTemplateDirectory(): string {
-  return process.env.SCENELAB_TEMPLATE_DIR ?? path.resolve(process.cwd(), 'templates')
+  if (process.env.SCENELAB_TEMPLATE_DIR) {
+    return process.env.SCENELAB_TEMPLATE_DIR
+  }
+
+  const cwdTemplates = path.resolve(process.cwd(), 'templates')
+
+  if (existsSync(cwdTemplates)) {
+    return cwdTemplates
+  }
+
+  const moduleTemplates = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..', 'templates')
+
+  if (existsSync(moduleTemplates)) {
+    return moduleTemplates
+  }
+
+  return cwdTemplates
 }
