@@ -1,0 +1,24 @@
+{
+  "name": "@scenelab/cli",
+  "version": "0.0.0",
+  "description": "JSON stdin/stdout CLI for SceneLab.",
+  "type": "module",
+  "bin": {
+    "scenelab": "./dist/index.js"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./schema": "./dist/schema.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.1",
+    "typescript": "^5.8.3"
+  }
+}

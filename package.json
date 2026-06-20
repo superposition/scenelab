@@ -8,8 +8,8 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "echo \"No tests yet\""
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run build && npm test --workspaces --if-present"
   },
   "license": "MIT"
 }
-
