@@ -3,6 +3,7 @@ import { randomUUID } from 'node:crypto'
 
 export const actions = [
   'status',
+  'inspect_set',
   'scan_library',
   'plan_arrangement',
   'apply_plan',

@@ -399,8 +399,11 @@ max/
   SceneLab Bridge.amxd
   bridge-design.md
   node/
-    scenelab-bridge.js
+    scenelab-bridge.cjs
     package.json
+    src/
+      live-adapter.cjs
+      server.cjs
 ```
 
 The `.amxd` file is the release artifact. The Node adapter source should stay in git as normal text.
@@ -430,4 +433,3 @@ The `.amxd` file is the release artifact. The Node adapter source should stay in
 - No overwriting existing clips.
 - No background arrangement generation inside Max.
 - No audio rendering or mastering loop inside the bridge.
-

@@ -13,6 +13,7 @@ The `scenelab` CLI is the stable interface for agents, scripts, tests, and MCP c
 ## Initial Actions
 
 - `status`
+- `inspect_set`
 - `scan_library`
 - `plan_arrangement`
 - `apply_plan`

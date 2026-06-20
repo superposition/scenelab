@@ -4,6 +4,8 @@
 
 The implementation target is documented in [bridge-design.md](bridge-design.md).
 
+The Node for Max adapter source lives in [node/](node/).
+
 ## Responsibilities
 
 - Run a Node for Max adapter.

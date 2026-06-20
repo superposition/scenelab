@@ -15,6 +15,11 @@ export async function handleRequest(request: SceneLabRequest): Promise<SceneLabR
         bridge: 'not_connected'
       })
 
+    case 'inspect_set':
+      return ok(request, 'Set inspection is not implemented without a bridge', {
+        status: 'not_implemented'
+      })
+
     case 'scan_library':
       return ok(request, 'Library scanning is not implemented yet', {
         status: 'not_implemented'

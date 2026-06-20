@@ -5,7 +5,8 @@
   "description": "Template-driven arrangement control for Ableton Live.",
   "type": "module",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "max/node"
   ],
   "scripts": {
     "build": "npm run build --workspaces --if-present",
