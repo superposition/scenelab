@@ -35,8 +35,33 @@ export async function handleRequest(request: SceneLabRequest): Promise<SceneLabR
         status: 'not_implemented'
       })
 
+    case 'create_scene':
+      return ok(request, request.dryRun ? 'Scene creation dry-run is not implemented without a bridge' : 'Scene creation is not implemented without a bridge', {
+        status: 'not_implemented'
+      })
+
+    case 'create_midi_track':
+      return ok(request, request.dryRun ? 'MIDI track creation dry-run is not implemented without a bridge' : 'MIDI track creation is not implemented without a bridge', {
+        status: 'not_implemented'
+      })
+
+    case 'create_midi_clip':
+      return ok(request, request.dryRun ? 'MIDI clip creation dry-run is not implemented without a bridge' : 'MIDI clip creation is not implemented without a bridge', {
+        status: 'not_implemented'
+      })
+
     case 'create_clip':
       return ok(request, request.dryRun ? 'Clip creation dry-run is not implemented yet' : 'Clip creation is not implemented yet', {
+        status: 'not_implemented'
+      })
+
+    case 'set_clip_notes':
+      return ok(request, request.dryRun ? 'Clip note writing dry-run is not implemented without a bridge' : 'Clip note writing is not implemented without a bridge', {
+        status: 'not_implemented'
+      })
+
+    case 'set_clip_name':
+      return ok(request, request.dryRun ? 'Clip name writing dry-run is not implemented without a bridge' : 'Clip name writing is not implemented without a bridge', {
         status: 'not_implemented'
       })
 

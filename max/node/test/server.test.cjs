@@ -156,13 +156,176 @@ test('unsupported actions return structured errors', async (t) => {
 
   const response = await postRequest(bridge.url, {
     id: 'unsupported',
-    action: 'create_clip',
+    action: 'load_rack',
     dryRun: true,
     params: {}
   })
 
   assert.equal(response.ok, false)
   assert.equal(response.error.code, 'unsupported_operation')
+})
+
+test('dry-run write requests do not mutate the Live set', async (t) => {
+  const bridge = await startBridge(createStaticLiveAdapter({ tracks: [], scenes: [] }))
+  t.after(() => bridge.close())
+
+  const dryRun = await postRequest(bridge.url, {
+    id: 'dry-run-scene',
+    action: 'create_scene',
+    dryRun: true,
+    params: {
+      name: 'Intro'
+    }
+  })
+  const inspect = await postRequest(bridge.url, {
+    id: 'after-dry-run',
+    action: 'inspect_set',
+    dryRun: true,
+    params: {}
+  })
+
+  assert.equal(dryRun.ok, true)
+  assert.equal(dryRun.data.status, 'dry_run')
+  assert.equal(inspect.data.set.scenes.length, 0)
+})
+
+test('write requests require apply confirmation even when called directly on bridge', async (t) => {
+  const bridge = await startBridge(createStaticLiveAdapter({ tracks: [], scenes: [] }))
+  t.after(() => bridge.close())
+
+  const response = await postRequest(bridge.url, {
+    id: 'missing-confirm',
+    action: 'create_scene',
+    dryRun: false,
+    params: {
+      name: 'Intro'
+    }
+  })
+
+  assert.equal(response.ok, false)
+  assert.equal(response.error.code, 'missing_apply_confirmation')
+})
+
+test('confirmed writes create scene track clip name and notes', async (t) => {
+  const bridge = await startBridge(createStaticLiveAdapter({ tracks: [], scenes: [] }))
+  t.after(() => bridge.close())
+
+  const scene = await applyRequest(bridge.url, {
+    id: 'create-scene',
+    action: 'create_scene',
+    params: {
+      name: 'Intro'
+    }
+  })
+  const track = await applyRequest(bridge.url, {
+    id: 'create-track',
+    action: 'create_midi_track',
+    params: {
+      name: 'Keys'
+    }
+  })
+  const clip = await applyRequest(bridge.url, {
+    id: 'create-clip',
+    action: 'create_midi_clip',
+    params: {
+      trackIndex: 0,
+      sceneIndex: 0,
+      lengthBeats: 6,
+      name: 'Intro Keys'
+    }
+  })
+  const renamed = await applyRequest(bridge.url, {
+    id: 'rename-clip',
+    action: 'set_clip_name',
+    params: {
+      trackIndex: 0,
+      sceneIndex: 0,
+      name: 'Intro Keys 6/8'
+    }
+  })
+  const notes = await applyRequest(bridge.url, {
+    id: 'set-notes',
+    action: 'set_clip_notes',
+    params: {
+      trackIndex: 0,
+      sceneIndex: 0,
+      notes: [
+        { pitch: 60, startBeat: 0, durationBeats: 1.5, velocity: 96 },
+        { pitch: 64, startBeat: 0, durationBeats: 1.5, velocity: 92 },
+        { pitch: 67, startBeat: 0, durationBeats: 1.5, velocity: 90 }
+      ]
+    }
+  })
+  const inspect = await postRequest(bridge.url, {
+    id: 'inspect-created',
+    action: 'inspect_set',
+    dryRun: true,
+    params: {}
+  })
+
+  assert.equal(scene.data.scene.name, 'Intro')
+  assert.equal(track.data.track.name, 'Keys')
+  assert.equal(clip.data.clip.lengthBeats, 6)
+  assert.equal(renamed.data.clip.name, 'Intro Keys 6/8')
+  assert.equal(notes.data.clip.notes.length, 3)
+  assert.equal(inspect.data.set.scenes.length, 1)
+  assert.equal(inspect.data.set.tracks.length, 1)
+  assert.equal(inspect.data.set.tracks[0].clipSlots[0].hasClip, true)
+  assert.equal(inspect.data.set.tracks[0].clipSlots[0].clip.name, 'Intro Keys 6/8')
+})
+
+test('occupied clip slots return structured errors', async (t) => {
+  const bridge = await startBridge(
+    createStaticLiveAdapter({
+      tracks: [{ name: 'Keys' }],
+      scenes: [{ name: 'Intro' }]
+    })
+  )
+  t.after(() => bridge.close())
+
+  await applyRequest(bridge.url, {
+    id: 'first-clip',
+    action: 'create_midi_clip',
+    params: {
+      trackIndex: 0,
+      sceneIndex: 0,
+      lengthBeats: 4
+    }
+  })
+  const second = await applyRequest(bridge.url, {
+    id: 'second-clip',
+    action: 'create_midi_clip',
+    params: {
+      trackIndex: 0,
+      sceneIndex: 0,
+      lengthBeats: 4
+    }
+  })
+
+  assert.equal(second.ok, false)
+  assert.equal(second.error.code, 'clip_slot_occupied')
+})
+
+test('CLI can apply a confirmed scene creation through the bridge', async (t) => {
+  const bridge = await startBridge(createStaticLiveAdapter({ tracks: [], scenes: [] }))
+  t.after(() => bridge.close())
+
+  const result = await runCli(
+    {
+      id: 'cli-create-scene',
+      action: 'create_scene',
+      dryRun: false,
+      confirm: 'apply',
+      params: {
+        name: 'CLI Intro'
+      }
+    },
+    bridge.url
+  )
+
+  assert.equal(result.status, 0)
+  assert.equal(result.json.ok, true)
+  assert.equal(result.json.data.scene.name, 'CLI Intro')
 })
 
 async function startBridge(liveAdapter) {
@@ -205,6 +368,14 @@ async function postRequest(url, body) {
 
   assert.equal(response.status, 200)
   return response.json()
+}
+
+function applyRequest(url, body) {
+  return postRequest(url, {
+    dryRun: false,
+    confirm: 'apply',
+    ...body
+  })
 }
 
 function runCli(body, bridgeUrl) {

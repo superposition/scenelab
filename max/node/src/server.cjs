@@ -100,6 +100,22 @@ async function handleBridgeRequest(request, config) {
       })
     }
 
+    if (isWriteAction(request.action)) {
+      const dryRun = dryRunWriteResponse(request)
+
+      if (dryRun) {
+        return dryRun
+      }
+
+      if (request.confirm !== 'apply') {
+        return errorResponse(request.id, request.dryRun, 'missing_apply_confirmation', 'Write requests require confirm: "apply".', {
+          action: request.action
+        })
+      }
+
+      return handleWriteRequest(request, config)
+    }
+
     return errorResponse(request.id, request.dryRun, 'unsupported_operation', `Bridge action is not supported yet: ${request.action}`, {
       action: request.action
     })
@@ -110,6 +126,70 @@ async function handleBridgeRequest(request, config) {
       details: error.details
     })
   }
+}
+
+async function handleWriteRequest(request, config) {
+  if (request.action === 'create_scene') {
+    const scene = await config.liveAdapter.createScene(request.params)
+    return okResponse(request, 'SceneLab created a scene', {
+      scene
+    })
+  }
+
+  if (request.action === 'create_midi_track') {
+    const track = await config.liveAdapter.createMidiTrack(request.params)
+    return okResponse(request, 'SceneLab created a MIDI track', {
+      track
+    })
+  }
+
+  if (request.action === 'create_midi_clip' || request.action === 'create_clip') {
+    const clip = await config.liveAdapter.createMidiClip(request.params)
+    return okResponse(request, 'SceneLab created a MIDI clip', {
+      clip
+    })
+  }
+
+  if (request.action === 'set_clip_notes') {
+    const clip = await config.liveAdapter.setClipNotes(request.params)
+    return okResponse(request, 'SceneLab wrote MIDI notes', {
+      clip
+    })
+  }
+
+  if (request.action === 'set_clip_name') {
+    const clip = await config.liveAdapter.setClipName(request.params)
+    return okResponse(request, 'SceneLab set a clip name', {
+      clip
+    })
+  }
+
+  return errorResponse(request.id, request.dryRun, 'unsupported_operation', `Bridge action is not supported yet: ${request.action}`, {
+    action: request.action
+  })
+}
+
+function dryRunWriteResponse(request) {
+  if (!request.dryRun || !isWriteAction(request.action)) {
+    return null
+  }
+
+  return okResponse(request, `SceneLab dry-run planned ${request.action}`, {
+    status: 'dry_run',
+    action: request.action,
+    params: request.params
+  })
+}
+
+function isWriteAction(action) {
+  return (
+    action === 'create_scene' ||
+    action === 'create_midi_track' ||
+    action === 'create_midi_clip' ||
+    action === 'create_clip' ||
+    action === 'set_clip_notes' ||
+    action === 'set_clip_name'
+  )
 }
 
 function withTimeout(promise, timeoutMs, request) {

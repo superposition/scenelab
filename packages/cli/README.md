@@ -17,7 +17,12 @@ The `scenelab` CLI is the stable interface for agents, scripts, tests, and MCP c
 - `scan_library`
 - `plan_arrangement`
 - `apply_plan`
+- `create_scene`
+- `create_midi_track`
+- `create_midi_clip`
 - `create_clip`
+- `set_clip_notes`
+- `set_clip_name`
 - `load_rack`
 - `write_automation`
 
