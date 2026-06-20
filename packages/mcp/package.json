@@ -1,0 +1,27 @@
+{
+  "name": "@scenelab/mcp",
+  "version": "0.0.0",
+  "private": true,
+  "description": "MCP server for SceneLab CLI tools.",
+  "type": "module",
+  "bin": {
+    "scenelab-mcp": "./dist/index.js"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./tools": "./dist/tools.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "@scenelab/cli": "0.0.0",
+    "@modelcontextprotocol/sdk": "1.29.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.1",
+    "typescript": "^5.8.3"
+  }
+}
