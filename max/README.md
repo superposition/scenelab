@@ -2,6 +2,8 @@
 
 `SceneLab Bridge.amxd` is the Max for Live device that connects SceneLab to Ableton Live.
 
+The implementation target is documented in [bridge-design.md](bridge-design.md).
+
 ## Responsibilities
 
 - Run a Node for Max adapter.
@@ -22,4 +24,3 @@
 ## Serum
 
 Serum and Serum 2 should be controlled through saved Ableton Instrument Racks with mapped macros. SceneLab should automate rack macros rather than attempting to drive the Serum UI directly.
-
