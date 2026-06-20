@@ -63,3 +63,4 @@ SceneLab does not use a VST as the Ableton control surface.
 
 VSTs are controlled instruments or effects. For Serum and Serum 2, SceneLab should load saved Ableton Instrument Racks and automate exposed macros instead of trying to drive the plugin UI.
 
+The rack naming and macro contract lives in [Serum Rack Macro Standard](serum-rack-standard.md).

@@ -28,6 +28,7 @@ The Max for Live device is the only layer that talks directly to Ableton Live. I
 - Use localhost HTTP JSON between the CLI and the running bridge.
 - Keep dry-run as the default for planned edits.
 - Treat Serum and Serum 2 as controlled instruments through saved Ableton racks and mapped macros.
+- Use the [Serum rack macro standard](docs/serum-rack-standard.md) for rack names, macro names, and template references.
 
 ## Safety Model
 
@@ -89,4 +90,3 @@ templates/     Arrangement and groove template registry
 ## Status
 
 SceneLab is at scaffold stage. The initial GitHub issues define the v1 implementation path.
-

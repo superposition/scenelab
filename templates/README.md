@@ -74,3 +74,9 @@ npm test --workspace @scenelab/cli
 ```
 
 Invalid templates fail with the source file and schema path that need attention.
+
+## Serum Rack References
+
+Serum and Serum 2 references must point at saved Ableton Instrument Racks, not plugin UI state. Use the rack names, macro display names, automation target ids, and missing-rack warnings from [Serum Rack Macro Standard](../docs/serum-rack-standard.md).
+
+Template authors should keep the template `role` stable even when choosing a style-specific rack name. For example, `role: "synth-lead"` can reference `SceneLab Serum Lead`, `SceneLab Serum Smooth Lead`, or a matching `SceneLab Serum 2 ...` rack as long as the macro contract is identical.

@@ -192,7 +192,7 @@
         "tags": ["kick", "snare", "hats"]
       }
     ],
-    "warnings": ["Use placeholder MIDI devices when producer racks are missing."]
+    "warnings": ["Optional Serum rack missing behavior: if SceneLab Serum Smooth Lead is not indexed, keep the synth-lead track and use a placeholder macro-ready instrument until the rack exists."]
   },
   "automation": {
     "lanes": [
