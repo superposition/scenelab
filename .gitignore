@@ -1,0 +1,16 @@
+node_modules/
+dist/
+coverage/
+.DS_Store
+.env
+.env.*
+!.env.example
+*.log
+
+# Ableton local/generated state
+*.als
+*.asd
+*.wav
+*.aif
+*.aiff
+
