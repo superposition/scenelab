@@ -26,6 +26,23 @@ The `scenelab` CLI is the stable interface for agents, scripts, tests, and MCP c
 - `load_rack`
 - `write_automation`
 
+## Arrangement Planning
+
+`plan_arrangement` runs locally in the CLI so plans can be generated without Ableton running.
+
+The v1 proof template is `city-pop-6-8`:
+
+```json
+{
+  "action": "plan_arrangement",
+  "params": {
+    "templateId": "city-pop-6-8"
+  }
+}
+```
+
+The response includes a dry-run plan with scenes, tracks, clips, MIDI notes, automation intent, asset expectations, mix expectations, and warnings. If no `templateId` is provided, the CLI defaults to `city-pop-6-8`.
+
 ## Bridge URL
 
 By default, the CLI returns local placeholder responses. Set `SCENELAB_BRIDGE_URL` to send validated requests to a running bridge:

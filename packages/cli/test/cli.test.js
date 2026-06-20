@@ -126,6 +126,68 @@ test('confirmed mutating requests reach placeholder action handler', () => {
   assert.equal(result.json.data.status, 'not_implemented')
 })
 
+test('plan_arrangement returns a city pop 6/8 dry-run plan', () => {
+  const result = runCli(
+    JSON.stringify({
+      id: 'plan-city-pop',
+      action: 'plan_arrangement',
+      params: {
+        templateId: 'city-pop-6-8'
+      }
+    })
+  )
+
+  assert.equal(result.status, 0)
+  assert.equal(result.json.ok, true)
+  assert.equal(result.json.summary, 'Planned City Pop 6/8 Proof')
+  assert.equal(result.json.data.plan.templateId, 'city-pop-6-8')
+  assert.equal(result.json.data.plan.dryRun, true)
+  assert.equal(result.json.data.plan.meter.numerator, 6)
+  assert.equal(result.json.data.plan.meter.denominator, 8)
+  assert.equal(result.json.data.plan.scenes.length, 6)
+  assert.equal(result.json.data.plan.tracks.length, 7)
+  assert.equal(result.json.data.plan.clips.length, 42)
+  assert.ok(result.json.data.plan.clips.some((clip) => clip.id === 'clip-intro-keys' && clip.notes.length >= 4))
+  assert.ok(result.json.data.plan.clips.some((clip) => clip.id === 'clip-intro-bass' && clip.notes.some((note) => note.role === 'pickup')))
+  assert.ok(result.json.data.plan.clips.some((clip) => clip.id === 'clip-intro-drums' && clip.notes.some((note) => note.role === 'hat')))
+  assert.deepEqual(
+    result.json.data.plan.automation.map((lane) => lane.target),
+    ['synth-lead.cutoff', 'return.delay.send']
+  )
+})
+
+test('plan_arrangement remains local when a bridge is configured', async (t) => {
+  const received = []
+  const bridge = await startFakeBridge(async (request, response) => {
+    const body = await readJsonRequest(request)
+    received.push(body)
+
+    writeJsonResponse(response, 200, {
+      ok: true,
+      id: body.id,
+      dryRun: body.dryRun,
+      summary: 'Fake bridge should not handle planning',
+      data: {
+        bridge: 'fake'
+      },
+      warnings: []
+    })
+  })
+  t.after(async () => bridge.close())
+
+  const result = await runCliAsync(JSON.stringify({ id: 'local-plan', action: 'plan_arrangement' }), {
+    env: {
+      SCENELAB_BRIDGE_URL: bridge.url
+    }
+  })
+
+  assert.equal(result.status, 0)
+  assert.equal(result.json.ok, true)
+  assert.equal(result.json.summary, 'Planned City Pop 6/8 Proof')
+  assert.equal(result.json.data.plan.templateId, 'city-pop-6-8')
+  assert.deepEqual(received, [])
+})
+
 test('forwards requests to a configured bridge and returns bridge JSON', async (t) => {
   const received = []
   const bridge = await startFakeBridge(async (request, response) => {

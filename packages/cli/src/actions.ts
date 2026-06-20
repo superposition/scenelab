@@ -1,8 +1,14 @@
 import type { SceneLabRequest, SceneLabResponse } from './schema.js'
 import { callBridge, getBridgeUrl } from './bridge.js'
+import { TemplateRegistryError } from './templates.js'
+import { planArrangement } from './planner.js'
 
 export async function handleRequest(request: SceneLabRequest): Promise<SceneLabResponse> {
   const bridgeUrl = getBridgeUrl()
+
+  if (request.action === 'plan_arrangement') {
+    return handlePlanArrangement(request)
+  }
 
   if (bridgeUrl) {
     return callBridge(bridgeUrl, request)
@@ -22,11 +28,6 @@ export async function handleRequest(request: SceneLabRequest): Promise<SceneLabR
 
     case 'scan_library':
       return ok(request, 'Library scanning is not implemented yet', {
-        status: 'not_implemented'
-      })
-
-    case 'plan_arrangement':
-      return ok(request, 'Arrangement planning is not implemented yet', {
         status: 'not_implemented'
       })
 
@@ -77,6 +78,31 @@ export async function handleRequest(request: SceneLabRequest): Promise<SceneLabR
   }
 }
 
+async function handlePlanArrangement(request: SceneLabRequest): Promise<SceneLabResponse> {
+  try {
+    const plan = await planArrangement({
+      templateId: typeof request.params.templateId === 'string' ? request.params.templateId : undefined
+    })
+
+    return ok(request, `Planned ${plan.templateName}`, {
+      plan
+    })
+  } catch (error) {
+    if (error instanceof TemplateRegistryError) {
+      return fail(request, error.message, {
+        code: error.code,
+        message: error.message,
+        details: error.details
+      })
+    }
+
+    return fail(request, 'Arrangement planning failed', {
+      code: 'arrangement_planning_error',
+      message: error instanceof Error ? error.message : String(error)
+    })
+  }
+}
+
 function ok(request: SceneLabRequest, summary: string, data: Record<string, unknown>): SceneLabResponse {
   return {
     ok: true,
@@ -84,6 +110,17 @@ function ok(request: SceneLabRequest, summary: string, data: Record<string, unkn
     dryRun: request.dryRun,
     summary,
     data,
+    warnings: []
+  }
+}
+
+function fail(request: SceneLabRequest, summary: string, error: { code: string; message: string; details?: unknown }): SceneLabResponse {
+  return {
+    ok: false,
+    id: request.id,
+    dryRun: request.dryRun,
+    summary,
+    error,
     warnings: []
   }
 }

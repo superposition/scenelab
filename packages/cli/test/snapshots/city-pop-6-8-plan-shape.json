@@ -1,0 +1,288 @@
+{
+  "planVersion": 1,
+  "templateId": "city-pop-6-8",
+  "dryRun": true,
+  "meter": {
+    "numerator": 6,
+    "denominator": 8,
+    "feel": "compound duple with smooth backbeat lift",
+    "subdivisions": [
+      "1-2-3 4-5-6",
+      "dotted-quarter pulse",
+      "pickup eighths"
+    ]
+  },
+  "tempoBpm": 96,
+  "keyCenter": "A major",
+  "sceneOrder": [
+    {
+      "id": "scene-intro",
+      "startBar": 1,
+      "bars": 4,
+      "energy": 0.35
+    },
+    {
+      "id": "scene-verse-a",
+      "startBar": 5,
+      "bars": 8,
+      "energy": 0.5
+    },
+    {
+      "id": "scene-pre-chorus",
+      "startBar": 13,
+      "bars": 4,
+      "energy": 0.68
+    },
+    {
+      "id": "scene-chorus",
+      "startBar": 17,
+      "bars": 8,
+      "energy": 0.9
+    },
+    {
+      "id": "scene-bridge",
+      "startBar": 25,
+      "bars": 6,
+      "energy": 0.72
+    },
+    {
+      "id": "scene-outro",
+      "startBar": 31,
+      "bars": 8,
+      "energy": 0.78
+    }
+  ],
+  "trackRoles": [
+    {
+      "id": "track-drums",
+      "role": "drums",
+      "type": "midi",
+      "required": true
+    },
+    {
+      "id": "track-bass",
+      "role": "bass",
+      "type": "midi",
+      "required": true
+    },
+    {
+      "id": "track-keys",
+      "role": "keys",
+      "type": "midi",
+      "required": true
+    },
+    {
+      "id": "track-guitar",
+      "role": "guitar",
+      "type": "audio",
+      "required": false
+    },
+    {
+      "id": "track-brass",
+      "role": "brass",
+      "type": "midi",
+      "required": false
+    },
+    {
+      "id": "track-strings",
+      "role": "strings",
+      "type": "midi",
+      "required": false
+    },
+    {
+      "id": "track-synth-lead",
+      "role": "synth-lead",
+      "type": "midi",
+      "required": true
+    }
+  ],
+  "clipCount": 42,
+  "proofClips": [
+    {
+      "id": "clip-intro-drums",
+      "trackId": "track-drums",
+      "sceneId": "scene-intro",
+      "lengthBars": 4,
+      "lengthBeats": 24,
+      "loopLengthBars": 4,
+      "noteCount": 19,
+      "firstNotes": [
+        {
+          "pitch": 36,
+          "startBeat": 0,
+          "durationBeats": 0.5,
+          "velocity": 106,
+          "role": "kick"
+        },
+        {
+          "pitch": 36,
+          "startBeat": 3,
+          "durationBeats": 0.5,
+          "velocity": 96,
+          "role": "kick"
+        },
+        {
+          "pitch": 38,
+          "startBeat": 3,
+          "durationBeats": 0.75,
+          "velocity": 104,
+          "role": "snare"
+        },
+        {
+          "pitch": 42,
+          "startBeat": 0,
+          "durationBeats": 0.25,
+          "velocity": 72,
+          "role": "hat"
+        }
+      ]
+    },
+    {
+      "id": "clip-intro-bass",
+      "trackId": "track-bass",
+      "sceneId": "scene-intro",
+      "lengthBars": 4,
+      "lengthBeats": 24,
+      "loopLengthBars": 4,
+      "noteCount": 8,
+      "firstNotes": [
+        {
+          "pitch": 45,
+          "startBeat": 0,
+          "durationBeats": 1.5,
+          "velocity": 96,
+          "role": "root-motion"
+        },
+        {
+          "pitch": 57,
+          "startBeat": 2.5,
+          "durationBeats": 0.5,
+          "velocity": 78,
+          "role": "pickup"
+        },
+        {
+          "pitch": 42,
+          "startBeat": 3,
+          "durationBeats": 1.5,
+          "velocity": 96,
+          "role": "root-motion"
+        },
+        {
+          "pitch": 54,
+          "startBeat": 5.5,
+          "durationBeats": 0.5,
+          "velocity": 78,
+          "role": "pickup"
+        }
+      ]
+    },
+    {
+      "id": "clip-intro-keys",
+      "trackId": "track-keys",
+      "sceneId": "scene-intro",
+      "lengthBars": 4,
+      "lengthBeats": 24,
+      "loopLengthBars": 4,
+      "noteCount": 16,
+      "firstNotes": [
+        {
+          "pitch": 57,
+          "startBeat": 0,
+          "durationBeats": 2.75,
+          "velocity": 76,
+          "role": "chord-tone"
+        },
+        {
+          "pitch": 61,
+          "startBeat": 0,
+          "durationBeats": 2.75,
+          "velocity": 76,
+          "role": "chord-tone"
+        },
+        {
+          "pitch": 64,
+          "startBeat": 0,
+          "durationBeats": 2.75,
+          "velocity": 76,
+          "role": "chord-tone"
+        },
+        {
+          "pitch": 68,
+          "startBeat": 0,
+          "durationBeats": 2.75,
+          "velocity": 76,
+          "role": "chord-tone"
+        }
+      ]
+    },
+    {
+      "id": "clip-chorus-synth-lead",
+      "trackId": "track-synth-lead",
+      "sceneId": "scene-chorus",
+      "lengthBars": 8,
+      "lengthBeats": 48,
+      "loopLengthBars": 4,
+      "noteCount": 4,
+      "firstNotes": [
+        {
+          "pitch": 80,
+          "startBeat": 0,
+          "durationBeats": 1,
+          "velocity": 88,
+          "role": "lead-hook"
+        },
+        {
+          "pitch": 83,
+          "startBeat": 1.5,
+          "durationBeats": 1,
+          "velocity": 88,
+          "role": "lead-hook"
+        },
+        {
+          "pitch": 85,
+          "startBeat": 3,
+          "durationBeats": 1,
+          "velocity": 88,
+          "role": "lead-hook"
+        },
+        {
+          "pitch": 88,
+          "startBeat": 4.5,
+          "durationBeats": 1,
+          "velocity": 88,
+          "role": "lead-hook"
+        }
+      ]
+    },
+    {
+      "id": "clip-outro-guitar",
+      "trackId": "track-guitar",
+      "sceneId": "scene-outro",
+      "lengthBars": 8,
+      "lengthBeats": 48,
+      "loopLengthBars": 8,
+      "noteCount": 0,
+      "firstNotes": []
+    }
+  ],
+  "automation": [
+    {
+      "id": "automation-1-synth-lead-cutoff",
+      "target": "synth-lead.cutoff",
+      "sections": [
+        "pre-chorus",
+        "chorus",
+        "bridge"
+      ]
+    },
+    {
+      "id": "automation-2-return-delay-send",
+      "target": "return.delay.send",
+      "sections": [
+        "chorus",
+        "outro"
+      ]
+    }
+  ],
+  "warningCount": 3
+}
