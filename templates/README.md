@@ -25,3 +25,52 @@ Other seed families:
 - rock
 - modern pop
 
+The v0 seed arrangement templates live in:
+
+```text
+templates/arrangements/
+```
+
+Current seeds:
+
+- `city-pop-6-8`
+- `drum-and-bass-174`
+- `jazz-swing-140`
+- `modern-pop-96`
+- `rock-anthem-128`
+
+## Data Model
+
+Each template is a JSON file with `schemaVersion: 1` and `type: "arrangement"`.
+
+Required top-level fields:
+
+- `id`: kebab-case stable id.
+- `name` and `description`: readable labels for review and UI.
+- `genreFamily`: one of `drum-and-bass`, `jazz`, `rock`, `city-pop`, or `modern-pop`.
+- `meter`: numerator, denominator, feel, and optional subdivisions.
+- `tempoRange`: `minBpm`, `maxBpm`, and `defaultBpm`.
+- `harmony`: key center, mode, harmonic language, movement, and voice-leading intent.
+- `rhythm`: groove, humanization, and role-based rhythmic patterns.
+- `instrumentation`: track roles, names, types, required flags, and sound intent.
+- `arrangementRoles`: ordered sections with bar counts, energy, and section roles.
+- `energyCurve`: section-linked energy points.
+- `assets`: expected racks, samples, and missing-asset warnings.
+- `automation`: planned automation lanes and target sections.
+- `mix`: headroom, buses, and mix expectations.
+
+The parser lives in `packages/cli/src/templates.ts`. It validates every seed during tests and reports file paths plus schema paths for invalid templates.
+
+## Adding Templates
+
+1. Add a readable JSON file under `templates/arrangements/`.
+2. Use a stable kebab-case `id`; filenames should match the id.
+3. Keep musical intent explicit enough for a contributor to review without Ableton.
+4. Reference assets by role and name, but mark producer-specific racks or samples as `required: false` until the library indexer can prove they exist.
+5. Run:
+
+```sh
+npm test --workspace @scenelab/cli
+```
+
+Invalid templates fail with the source file and schema path that need attention.

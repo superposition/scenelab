@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 1,
+  "id": "rock-anthem-128",
+  "type": "arrangement",
+  "name": "Rock Anthem 128",
+  "description": "A verse-chorus rock arrangement with dynamic chorus lift, live-band roles, guitar layers, bass lock-in, breakdown, and solo space.",
+  "genreFamily": "rock",
+  "meter": {
+    "numerator": 4,
+    "denominator": 4,
+    "feel": "straight eighth rock pulse with chorus lift",
+    "subdivisions": ["eighth notes", "16th fills", "half-time breakdown"]
+  },
+  "tempoRange": {
+    "minBpm": 118,
+    "maxBpm": 136,
+    "defaultBpm": 128
+  },
+  "harmony": {
+    "keyCenter": "E major",
+    "mode": "major with mixolydian guitar color",
+    "language": ["power chords", "sus chords", "pedal tones", "relative minor bridge"],
+    "movement": ["verse pedal riff", "pre-chorus climb", "chorus IV-I-V lift", "bridge relative minor turn"],
+    "voiceLeading": ["guitars move in register layers", "bass locks root motion to kick", "lead line answers vocal phrases"]
+  },
+  "rhythm": {
+    "groove": "driving kick-snare pocket with open chorus hats and tom fills",
+    "humanization": "live-band timing feel with tight downbeats and expressive fills",
+    "patterns": [
+      {
+        "role": "drums",
+        "description": "verse closed hats, chorus open hats, tom fills into transitions",
+        "lengthBars": 4
+      },
+      {
+        "role": "bass",
+        "description": "eighth-note root motion locked to kick with chorus octave lift",
+        "lengthBars": 4
+      },
+      {
+        "role": "guitar",
+        "description": "palm-muted verse riff opening to chorus strums",
+        "lengthBars": 4
+      }
+    ]
+  },
+  "instrumentation": {
+    "tracks": [
+      {
+        "role": "drums",
+        "name": "Rock Kit",
+        "type": "midi",
+        "required": true,
+        "sound": "live acoustic kit"
+      },
+      {
+        "role": "bass",
+        "name": "Electric Bass",
+        "type": "midi",
+        "required": true,
+        "sound": "picked rock bass"
+      },
+      {
+        "role": "rhythm-guitar",
+        "name": "Rhythm Guitar",
+        "type": "audio",
+        "required": true,
+        "sound": "crunch guitars"
+      },
+      {
+        "role": "lead-guitar",
+        "name": "Lead Guitar",
+        "type": "audio",
+        "required": false,
+        "sound": "solo and hooks"
+      },
+      {
+        "role": "keys",
+        "name": "Support Keys",
+        "type": "midi",
+        "required": false,
+        "sound": "organ or pad support"
+      }
+    ]
+  },
+  "arrangementRoles": {
+    "sections": [
+      {
+        "id": "intro",
+        "name": "Intro Riff",
+        "bars": 4,
+        "energy": 0.55,
+        "roles": ["main riff", "drum pickup"]
+      },
+      {
+        "id": "verse",
+        "name": "Verse",
+        "bars": 8,
+        "energy": 0.5,
+        "roles": ["vocal space", "palm-muted guitars", "tight bass"]
+      },
+      {
+        "id": "pre-chorus",
+        "name": "Pre-Chorus",
+        "bars": 4,
+        "energy": 0.72,
+        "roles": ["guitar climb", "tom fill", "harmony lift"]
+      },
+      {
+        "id": "chorus",
+        "name": "Chorus",
+        "bars": 8,
+        "energy": 0.95,
+        "roles": ["open guitars", "wide vocals", "crash lift"]
+      },
+      {
+        "id": "breakdown",
+        "name": "Breakdown",
+        "bars": 8,
+        "energy": 0.45,
+        "roles": ["half-time drums", "bass focus", "muted guitar hits"]
+      },
+      {
+        "id": "solo",
+        "name": "Solo",
+        "bars": 8,
+        "energy": 0.85,
+        "roles": ["lead guitar", "full band", "answer fills"]
+      }
+    ]
+  },
+  "energyCurve": [
+    {
+      "sectionId": "intro",
+      "energy": 0.55
+    },
+    {
+      "sectionId": "verse",
+      "energy": 0.5
+    },
+    {
+      "sectionId": "pre-chorus",
+      "energy": 0.72
+    },
+    {
+      "sectionId": "chorus",
+      "energy": 0.95
+    },
+    {
+      "sectionId": "breakdown",
+      "energy": 0.45
+    },
+    {
+      "sectionId": "solo",
+      "energy": 0.85
+    }
+  ],
+  "assets": {
+    "racks": [
+      {
+        "role": "bass",
+        "name": "SceneLab Picked Bass",
+        "required": false,
+        "tags": ["bass", "rock"]
+      }
+    ],
+    "samples": [
+      {
+        "role": "drums",
+        "name": "Rock Kit One-Shots",
+        "required": false,
+        "tags": ["kick", "snare", "tom"]
+      }
+    ],
+    "warnings": ["Audio guitar roles can start as named placeholder tracks."]
+  },
+  "automation": {
+    "lanes": [
+      {
+        "target": "music-bus.gain",
+        "gesture": "small lift into chorus and pullback for breakdown",
+        "sections": ["pre-chorus", "chorus", "breakdown"]
+      }
+    ]
+  },
+  "mix": {
+    "headroomDb": -6,
+    "buses": ["drum bus", "guitar bus", "bass bus", "music bus"],
+    "expectations": ["kick and bass lock tightly", "rhythm guitars are wide", "lead guitar owns solo midrange"]
+  }
+}

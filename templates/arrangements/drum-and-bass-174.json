@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 1,
+  "id": "drum-and-bass-174",
+  "type": "arrangement",
+  "name": "Drum And Bass 174",
+  "description": "A high-energy drum and bass arrangement with breakbeat detail, Reese/sub bass roles, half-time contrast, and 16-bar energy movement.",
+  "genreFamily": "drum-and-bass",
+  "meter": {
+    "numerator": 4,
+    "denominator": 4,
+    "feel": "fast 4/4 with 16th-note breakbeat grid",
+    "subdivisions": ["16ths", "32nd ghost notes", "half-time contrast"]
+  },
+  "tempoRange": {
+    "minBpm": 168,
+    "maxBpm": 178,
+    "defaultBpm": 174
+  },
+  "harmony": {
+    "keyCenter": "F minor",
+    "mode": "minor with suspended pads",
+    "language": ["pedal bass", "minor ninth pads", "chromatic bass fills"],
+    "movement": ["static tonic pressure", "sub drop into dominant tension", "breakdown pad reset"],
+    "voiceLeading": ["keep pads sparse", "move top notes slowly", "let bass provide most motion"]
+  },
+  "rhythm": {
+    "groove": "driving break with shuffled hats, ghost snares, and bass call-and-response",
+    "humanization": "microtiming on percussion only; kick, snare, and sub stay locked",
+    "patterns": [
+      {
+        "role": "breakbeat",
+        "description": "layered amen-style break with edited ghost notes and fill tails",
+        "lengthBars": 4
+      },
+      {
+        "role": "sub-bass",
+        "description": "long held sub notes with short answer fills before phrase turns",
+        "lengthBars": 8
+      },
+      {
+        "role": "reese",
+        "description": "mid-bass movement in alternate 4-bar phrases",
+        "lengthBars": 8
+      }
+    ]
+  },
+  "instrumentation": {
+    "tracks": [
+      {
+        "role": "breakbeat",
+        "name": "Break Kit",
+        "type": "midi",
+        "required": true,
+        "sound": "chopped break rack"
+      },
+      {
+        "role": "sub-bass",
+        "name": "Sub Bass",
+        "type": "midi",
+        "required": true,
+        "sound": "clean sine sub"
+      },
+      {
+        "role": "reese",
+        "name": "Reese Bass",
+        "type": "midi",
+        "required": true,
+        "sound": "wide modulated bass rack"
+      },
+      {
+        "role": "pad",
+        "name": "Atmos Pad",
+        "type": "midi",
+        "required": false,
+        "sound": "dark suspended pad"
+      },
+      {
+        "role": "fx",
+        "name": "Risers And Impacts",
+        "type": "audio",
+        "required": false,
+        "sound": "transition one-shots"
+      }
+    ]
+  },
+  "arrangementRoles": {
+    "sections": [
+      {
+        "id": "intro",
+        "name": "DJ Intro",
+        "bars": 16,
+        "energy": 0.35,
+        "roles": ["filtered break", "pad", "sub tease"]
+      },
+      {
+        "id": "build",
+        "name": "Build",
+        "bars": 16,
+        "energy": 0.7,
+        "roles": ["snare roll", "riser", "bass silence"]
+      },
+      {
+        "id": "drop",
+        "name": "Drop",
+        "bars": 32,
+        "energy": 1,
+        "roles": ["full break", "sub bass", "reese answer"]
+      },
+      {
+        "id": "breakdown",
+        "name": "Breakdown",
+        "bars": 16,
+        "energy": 0.45,
+        "roles": ["pad reset", "vocal chop space", "filtered drums"]
+      },
+      {
+        "id": "second-drop",
+        "name": "Second Drop",
+        "bars": 32,
+        "energy": 0.95,
+        "roles": ["alternate break edit", "bass fill", "impact resets"]
+      }
+    ]
+  },
+  "energyCurve": [
+    {
+      "sectionId": "intro",
+      "energy": 0.35
+    },
+    {
+      "sectionId": "build",
+      "energy": 0.7
+    },
+    {
+      "sectionId": "drop",
+      "energy": 1
+    },
+    {
+      "sectionId": "breakdown",
+      "energy": 0.45
+    },
+    {
+      "sectionId": "second-drop",
+      "energy": 0.95
+    }
+  ],
+  "assets": {
+    "racks": [
+      {
+        "role": "reese",
+        "name": "SceneLab Reese Rack",
+        "required": false,
+        "tags": ["bass", "macro-ready"]
+      }
+    ],
+    "samples": [
+      {
+        "role": "breakbeat",
+        "name": "Chopped Break Source",
+        "required": false,
+        "tags": ["break", "drums"]
+      }
+    ],
+    "warnings": ["Use generated MIDI break placeholders if no break source is indexed."]
+  },
+  "automation": {
+    "lanes": [
+      {
+        "target": "reese.filter",
+        "gesture": "tighten before drops and open across bass answers",
+        "sections": ["build", "drop", "second-drop"]
+      }
+    ]
+  },
+  "mix": {
+    "headroomDb": -7,
+    "buses": ["drum bus", "bass bus", "music bus", "fx returns"],
+    "expectations": ["sub remains mono", "break transient stays forward", "pads duck around bass phrases"]
+  }
+}

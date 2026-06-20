@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 1,
+  "id": "modern-pop-96",
+  "type": "arrangement",
+  "name": "Modern Pop 96",
+  "description": "A modern pop arrangement with sparse-to-dense section growth, hybrid drums, syncopated hooks, and topline support.",
+  "genreFamily": "modern-pop",
+  "meter": {
+    "numerator": 4,
+    "denominator": 4,
+    "feel": "straight pop pulse with syncopated hook pickups",
+    "subdivisions": ["16ths", "triplet ear-candy fills", "half-time bridge"]
+  },
+  "tempoRange": {
+    "minBpm": 88,
+    "maxBpm": 106,
+    "defaultBpm": 96
+  },
+  "harmony": {
+    "keyCenter": "D minor",
+    "mode": "minor with bright pre-chorus lift",
+    "language": ["minor pop loop", "relative major lift", "pedal tones", "suspended pre-chorus chords"],
+    "movement": ["sparse verse loop", "pre-chorus lift to relative major", "chorus return with brighter top notes"],
+    "voiceLeading": ["keep topline register clear", "move pad tops stepwise", "use pedal tones for hook continuity"]
+  },
+  "rhythm": {
+    "groove": "hybrid acoustic-electronic beat with pushed vocal-hook spaces",
+    "humanization": "tight kick and clap; percussion and topline doubles move slightly",
+    "patterns": [
+      {
+        "role": "drums",
+        "description": "minimal verse kick, chorus clap stack, bridge half-time reset",
+        "lengthBars": 4
+      },
+      {
+        "role": "bass",
+        "description": "sub follows root motion with octave pickups before chorus",
+        "lengthBars": 4
+      },
+      {
+        "role": "hook",
+        "description": "short synth or vocal-chop response after topline phrases",
+        "lengthBars": 2
+      }
+    ]
+  },
+  "instrumentation": {
+    "tracks": [
+      {
+        "role": "drums",
+        "name": "Hybrid Drums",
+        "type": "midi",
+        "required": true,
+        "sound": "electronic kit with acoustic layers"
+      },
+      {
+        "role": "bass",
+        "name": "Sub Bass",
+        "type": "midi",
+        "required": true,
+        "sound": "clean controlled sub"
+      },
+      {
+        "role": "pad",
+        "name": "Wide Pad",
+        "type": "midi",
+        "required": false,
+        "sound": "soft sidechain pad"
+      },
+      {
+        "role": "hook",
+        "name": "Hook Synth",
+        "type": "midi",
+        "required": true,
+        "sound": "short pluck lead"
+      },
+      {
+        "role": "vocal-space",
+        "name": "Topline Guide",
+        "type": "audio",
+        "required": false,
+        "sound": "placeholder vocal lane"
+      }
+    ]
+  },
+  "arrangementRoles": {
+    "sections": [
+      {
+        "id": "intro",
+        "name": "Intro",
+        "bars": 4,
+        "energy": 0.25,
+        "roles": ["hook fragment", "filtered drums"]
+      },
+      {
+        "id": "verse",
+        "name": "Verse",
+        "bars": 8,
+        "energy": 0.42,
+        "roles": ["vocal space", "minimal bass", "ear candy"]
+      },
+      {
+        "id": "pre-chorus",
+        "name": "Pre-Chorus",
+        "bars": 4,
+        "energy": 0.68,
+        "roles": ["snare build", "pad lift", "hook setup"]
+      },
+      {
+        "id": "chorus",
+        "name": "Chorus",
+        "bars": 8,
+        "energy": 0.9,
+        "roles": ["full drums", "sub", "hook answers"]
+      },
+      {
+        "id": "bridge",
+        "name": "Bridge",
+        "bars": 8,
+        "energy": 0.5,
+        "roles": ["half-time contrast", "vocal focus", "filtered pad"]
+      }
+    ]
+  },
+  "energyCurve": [
+    {
+      "sectionId": "intro",
+      "energy": 0.25
+    },
+    {
+      "sectionId": "verse",
+      "energy": 0.42
+    },
+    {
+      "sectionId": "pre-chorus",
+      "energy": 0.68
+    },
+    {
+      "sectionId": "chorus",
+      "energy": 0.9
+    },
+    {
+      "sectionId": "bridge",
+      "energy": 0.5
+    }
+  ],
+  "assets": {
+    "racks": [
+      {
+        "role": "hook",
+        "name": "SceneLab Pop Pluck",
+        "required": false,
+        "tags": ["synth", "hook", "macro-ready"]
+      }
+    ],
+    "samples": [
+      {
+        "role": "drums",
+        "name": "Modern Pop Clap Stack",
+        "required": false,
+        "tags": ["clap", "pop"]
+      }
+    ],
+    "warnings": ["Leave frequency space for a future lead vocal."]
+  },
+  "automation": {
+    "lanes": [
+      {
+        "target": "pad.filter",
+        "gesture": "open into pre-chorus and duck under chorus hook",
+        "sections": ["pre-chorus", "chorus"]
+      }
+    ]
+  },
+  "mix": {
+    "headroomDb": -6,
+    "buses": ["drum bus", "music bus", "vocal bus", "fx returns"],
+    "expectations": ["kick and vocal space dominate center", "hook synth stays short", "pads widen without masking topline"]
+  }
+}

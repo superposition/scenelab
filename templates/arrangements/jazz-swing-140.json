@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "id": "jazz-swing-140",
+  "type": "arrangement",
+  "name": "Jazz Swing 140",
+  "description": "A medium-up jazz arrangement with head, solos, walking bass, comping, trading, and extended ii-V-I language.",
+  "genreFamily": "jazz",
+  "meter": {
+    "numerator": 4,
+    "denominator": 4,
+    "feel": "swing eighths with walking quarter-note bass",
+    "subdivisions": ["swing eighths", "triplet pickups", "laid-back comping"]
+  },
+  "tempoRange": {
+    "minBpm": 128,
+    "maxBpm": 152,
+    "defaultBpm": 140
+  },
+  "harmony": {
+    "keyCenter": "B-flat major",
+    "mode": "major with secondary dominants and modal interchange",
+    "language": ["ii-V-I", "turnaround", "tritone substitutions", "altered dominants"],
+    "movement": ["AABA head", "cycle movement into bridge", "turnaround tags"],
+    "voiceLeading": ["guide tones move by half step", "shell voicings leave solo space", "bass connects chord roots chromatically"]
+  },
+  "rhythm": {
+    "groove": "ride pattern with feathered kick, walking bass, and responsive comping",
+    "humanization": "intentional push-pull between ride, bass, and piano comping",
+    "patterns": [
+      {
+        "role": "drums",
+        "description": "ride pattern with snare comping and light kick feathering",
+        "lengthBars": 4
+      },
+      {
+        "role": "bass",
+        "description": "walking line through chord roots, approach tones, and passing diminished motion",
+        "lengthBars": 8
+      },
+      {
+        "role": "piano",
+        "description": "syncopated shell voicings that answer the melody",
+        "lengthBars": 8
+      }
+    ]
+  },
+  "instrumentation": {
+    "tracks": [
+      {
+        "role": "drums",
+        "name": "Brush And Ride Kit",
+        "type": "midi",
+        "required": true,
+        "sound": "acoustic jazz kit"
+      },
+      {
+        "role": "bass",
+        "name": "Upright Bass",
+        "type": "midi",
+        "required": true,
+        "sound": "upright pizzicato"
+      },
+      {
+        "role": "piano",
+        "name": "Comping Piano",
+        "type": "midi",
+        "required": true,
+        "sound": "dry grand piano"
+      },
+      {
+        "role": "horn",
+        "name": "Lead Horn",
+        "type": "midi",
+        "required": true,
+        "sound": "sax or trumpet lead"
+      }
+    ]
+  },
+  "arrangementRoles": {
+    "sections": [
+      {
+        "id": "head-in",
+        "name": "Head In",
+        "bars": 32,
+        "energy": 0.62,
+        "roles": ["melody", "walking bass", "light comping"]
+      },
+      {
+        "id": "piano-solo",
+        "name": "Piano Solo",
+        "bars": 32,
+        "energy": 0.7,
+        "roles": ["piano lead", "ride lift", "bass continuity"]
+      },
+      {
+        "id": "horn-solo",
+        "name": "Horn Solo",
+        "bars": 32,
+        "energy": 0.82,
+        "roles": ["horn lead", "active drums", "comping answers"]
+      },
+      {
+        "id": "trades",
+        "name": "Four-Bar Trades",
+        "bars": 16,
+        "energy": 0.88,
+        "roles": ["drum fills", "horn answers", "bass anchors"]
+      },
+      {
+        "id": "head-out",
+        "name": "Head Out",
+        "bars": 32,
+        "energy": 0.68,
+        "roles": ["melody return", "tag ending", "final hit"]
+      }
+    ]
+  },
+  "energyCurve": [
+    {
+      "sectionId": "head-in",
+      "energy": 0.62
+    },
+    {
+      "sectionId": "piano-solo",
+      "energy": 0.7
+    },
+    {
+      "sectionId": "horn-solo",
+      "energy": 0.82
+    },
+    {
+      "sectionId": "trades",
+      "energy": 0.88
+    },
+    {
+      "sectionId": "head-out",
+      "energy": 0.68
+    }
+  ],
+  "assets": {
+    "racks": [
+      {
+        "role": "piano",
+        "name": "SceneLab Dry Grand",
+        "required": false,
+        "tags": ["piano", "acoustic"]
+      }
+    ],
+    "samples": [],
+    "warnings": ["Template can use General MIDI-style placeholders when acoustic instruments are unavailable."]
+  },
+  "automation": {
+    "lanes": [
+      {
+        "target": "drums.room",
+        "gesture": "slight room lift during solos",
+        "sections": ["piano-solo", "horn-solo", "trades"]
+      }
+    ]
+  },
+  "mix": {
+    "headroomDb": -8,
+    "buses": ["rhythm section", "horn bus", "room return"],
+    "expectations": ["bass remains audible on small speakers", "piano leaves center for horn", "drums stay natural and dynamic"]
+  }
+}

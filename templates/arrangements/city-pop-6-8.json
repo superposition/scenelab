@@ -1,0 +1,216 @@
+{
+  "schemaVersion": 1,
+  "id": "city-pop-6-8",
+  "type": "arrangement",
+  "name": "City Pop 6/8 Proof",
+  "description": "A full-song city pop arrangement in 6/8 with extended harmony, bass motion, layered keys, guitar, brass, strings, synth hooks, and automation intent.",
+  "genreFamily": "city-pop",
+  "meter": {
+    "numerator": 6,
+    "denominator": 8,
+    "feel": "compound duple with smooth backbeat lift",
+    "subdivisions": ["1-2-3 4-5-6", "dotted-quarter pulse", "pickup eighths"]
+  },
+  "tempoRange": {
+    "minBpm": 88,
+    "maxBpm": 104,
+    "defaultBpm": 96
+  },
+  "harmony": {
+    "keyCenter": "A major",
+    "mode": "major with borrowed minor-color passing chords",
+    "language": ["maj9", "m9", "13sus", "secondary dominants", "tritone approach chords"],
+    "movement": ["Imaj9 to vi9", "ii9 to V13", "chromatic approach into IVmaj9", "outro vamp with secondary dominant lift"],
+    "voiceLeading": ["hold common tones across upper extensions", "move inner voices by step", "use bass inversions to avoid root-only motion"]
+  },
+  "rhythm": {
+    "groove": "tight 6/8 pocket with late snare, soft ghost notes, and pushed guitar upstrokes",
+    "humanization": "small velocity spread on hats and comping; bass stays close to grid",
+    "patterns": [
+      {
+        "role": "drums",
+        "description": "kick on compound downbeats, snare lift on beat four, ghost-note fill into section changes",
+        "lengthBars": 2
+      },
+      {
+        "role": "bass",
+        "description": "syncopated root-third-fifth motion with chromatic pickups into dominants",
+        "lengthBars": 4
+      },
+      {
+        "role": "keys",
+        "description": "electric piano comping with dotted-quarter anchors and eighth-note anticipations",
+        "lengthBars": 4
+      }
+    ]
+  },
+  "instrumentation": {
+    "tracks": [
+      {
+        "role": "drums",
+        "name": "Tight Kit",
+        "type": "midi",
+        "required": true,
+        "sound": "dry city pop drum rack"
+      },
+      {
+        "role": "bass",
+        "name": "Picked Bass",
+        "type": "midi",
+        "required": true,
+        "sound": "round electric bass"
+      },
+      {
+        "role": "keys",
+        "name": "Electric Piano",
+        "type": "midi",
+        "required": true,
+        "sound": "chorused EP"
+      },
+      {
+        "role": "guitar",
+        "name": "Clean Guitar",
+        "type": "audio",
+        "required": false,
+        "sound": "muted funk upstrokes"
+      },
+      {
+        "role": "brass",
+        "name": "Brass Hooks",
+        "type": "midi",
+        "required": false,
+        "sound": "short brass stabs"
+      },
+      {
+        "role": "strings",
+        "name": "String Pad",
+        "type": "midi",
+        "required": false,
+        "sound": "warm sustained ensemble"
+      },
+      {
+        "role": "synth-lead",
+        "name": "Late-Night Lead",
+        "type": "midi",
+        "required": true,
+        "sound": "Serum smooth lead rack"
+      }
+    ]
+  },
+  "arrangementRoles": {
+    "sections": [
+      {
+        "id": "intro",
+        "name": "Intro Hook",
+        "bars": 4,
+        "energy": 0.35,
+        "roles": ["keys", "bass pickup", "lead motif"]
+      },
+      {
+        "id": "verse-a",
+        "name": "Verse A",
+        "bars": 8,
+        "energy": 0.5,
+        "roles": ["vocal space", "tight drums", "moving bass"]
+      },
+      {
+        "id": "pre-chorus",
+        "name": "Pre-Chorus Lift",
+        "bars": 4,
+        "energy": 0.68,
+        "roles": ["dominant build", "brass answers", "filter opening"]
+      },
+      {
+        "id": "chorus",
+        "name": "Chorus",
+        "bars": 8,
+        "energy": 0.9,
+        "roles": ["full drums", "wide keys", "lead response"]
+      },
+      {
+        "id": "bridge",
+        "name": "Bridge Modulation",
+        "bars": 6,
+        "energy": 0.72,
+        "roles": ["borrowed chords", "strings", "bass inversion"]
+      },
+      {
+        "id": "outro",
+        "name": "Outro Vamp",
+        "bars": 8,
+        "energy": 0.78,
+        "roles": ["repeat hook", "ad-lib lead", "send throws"]
+      }
+    ]
+  },
+  "energyCurve": [
+    {
+      "sectionId": "intro",
+      "energy": 0.35
+    },
+    {
+      "sectionId": "verse-a",
+      "energy": 0.5
+    },
+    {
+      "sectionId": "pre-chorus",
+      "energy": 0.68
+    },
+    {
+      "sectionId": "chorus",
+      "energy": 0.9
+    },
+    {
+      "sectionId": "bridge",
+      "energy": 0.72
+    },
+    {
+      "sectionId": "outro",
+      "energy": 0.78
+    }
+  ],
+  "assets": {
+    "racks": [
+      {
+        "role": "synth-lead",
+        "name": "SceneLab Serum Smooth Lead",
+        "required": false,
+        "tags": ["serum", "lead", "macro-ready"]
+      },
+      {
+        "role": "keys",
+        "name": "SceneLab Chorus EP",
+        "required": false,
+        "tags": ["electric-piano", "chorus"]
+      }
+    ],
+    "samples": [
+      {
+        "role": "drums",
+        "name": "Dry Tight Kit",
+        "required": false,
+        "tags": ["kick", "snare", "hats"]
+      }
+    ],
+    "warnings": ["Use placeholder MIDI devices when producer racks are missing."]
+  },
+  "automation": {
+    "lanes": [
+      {
+        "target": "synth-lead.cutoff",
+        "gesture": "open through pre-chorus and relax into bridge",
+        "sections": ["pre-chorus", "chorus", "bridge"]
+      },
+      {
+        "target": "return.delay.send",
+        "gesture": "throw on brass and lead pickups",
+        "sections": ["chorus", "outro"]
+      }
+    ]
+  },
+  "mix": {
+    "headroomDb": -6,
+    "buses": ["drum bus", "music bus", "vocal bus", "fx returns"],
+    "expectations": ["bass stays centered", "keys and strings provide width", "lead synth avoids vocal midrange"]
+  }
+}
