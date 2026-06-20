@@ -20,6 +20,22 @@ The `scenelab` CLI is the stable interface for agents, scripts, tests, and MCP c
 - `load_rack`
 - `write_automation`
 
+## Bridge URL
+
+By default, the CLI returns local placeholder responses. Set `SCENELAB_BRIDGE_URL` to send validated requests to a running bridge:
+
+```sh
+SCENELAB_BRIDGE_URL=http://127.0.0.1:31741 scenelab
+```
+
+The CLI sends the same request JSON to:
+
+```text
+POST /requests
+```
+
+Bridge failures are normalized into JSON error responses.
+
 ## Request
 
 ```json
@@ -43,4 +59,3 @@ The `scenelab` CLI is the stable interface for agents, scripts, tests, and MCP c
   "warnings": []
 }
 ```
-

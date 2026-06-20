@@ -1,6 +1,13 @@
 import type { SceneLabRequest, SceneLabResponse } from './schema.js'
+import { callBridge, getBridgeUrl } from './bridge.js'
 
 export async function handleRequest(request: SceneLabRequest): Promise<SceneLabResponse> {
+  const bridgeUrl = getBridgeUrl()
+
+  if (bridgeUrl) {
+    return callBridge(bridgeUrl, request)
+  }
+
   switch (request.action) {
     case 'status':
       return ok(request, 'SceneLab CLI is ready', {
@@ -50,4 +57,3 @@ function ok(request: SceneLabRequest, summary: string, data: Record<string, unkn
     warnings: []
   }
 }
-

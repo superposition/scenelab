@@ -32,7 +32,12 @@ async function main(): Promise<void> {
     return
   }
 
-  writeJson(await handleRequest(parsed))
+  const response = await handleRequest(parsed)
+  writeJson(response)
+
+  if (!response.ok) {
+    process.exitCode = 1
+  }
 }
 
 function readStdin(): Promise<string> {
